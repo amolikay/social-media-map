@@ -3,52 +3,49 @@
   "title": "Average Social Media Addiction Score by Country",
   "width": 800,
   "height": 500,
-  "projection": {
-    "type": "equalEarth"
+  "projection": {"type": "equalEarth"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/datasets/geo-countries/main/data/countries.geojson",
+    "format": {"type": "json", "property": "features"}
   },
-  "layer": [
+  "transform": [
     {
-      "data": {
-        "url": "https://raw.githubusercontent.com/datasets/geo-countries/main/data/countries.geojson",
-        "format": {"type": "json", "property": "features"}
-      },
-      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
+      "lookup": "properties.ADMIN",
+      "from": {
+        "data": {
+          "url": "https://gist.githubusercontent.com/amolikay/f17d17c87efb161a0e1719e3ab8491a6/raw/beaf347c149a81231e192ecb01c9b762365535e1/gistfile1.txt/students_addiction_data.csv"
+        },
+        "key": "Country",
+        "fields": ["Addicted_Score"]
+      }
     },
     {
-      "data": {
-        "url": "https://gist.githubusercontent.com/YourUsername/.../students_addiction_data.csv"
-      },
-      "transform": [
-        {
-          "lookup": "Country",
-          "from": {
-            "data": {
-              "url": "https://raw.githubusercontent.com/datasets/geo-countries/main/data/countries.geojson",
-              "format": {"type": "json", "property": "features"}
-            },
-            "key": "properties.ADMIN"
-          },
-          "as": "geo"
-        },
-        {
-          "aggregate": [{"op": "mean", "field": "Addicted_Score", "as": "avg_addicted_score"}],
-          "groupby": ["Country"]
-        }
+      "aggregate": [
+        {"op": "mean", "field": "Addicted_Score", "as": "avg_addicted_score"}
       ],
-      "mark": "geoshape",
-      "encoding": {
-        "shape": {"field": "geo", "type": "geojson"},
-        "color": {
-          "field": "avg_addicted_score",
-          "type": "quantitative",
-          "scale": {"scheme": "viridis"},
-          "title": "Avg. Addicted Score"
-        },
-        "tooltip": [
-          {"field": "Country", "type": "nominal", "title": "Country"},
-          {"field": "avg_addicted_score", "type": "quantitative", "title": "Average Addicted Score", "format": ".2f"}
-        ]
-      }
+      "groupby": ["properties.ADMIN"]
     }
-  ]
+  ],
+  "mark": {"type": "geoshape", "stroke": "white"},
+  "encoding": {
+    "color": {
+      "condition": {
+        "test": "datum.avg_addicted_score !== null",
+        "field": "avg_addicted_score",
+        "type": "quantitative",
+        "scale": {"scheme": "viridis"},
+        "title": "Avg. Addicted Score"
+      },
+      "value": "lightgray"
+    },
+    "tooltip": [
+      {"field": "properties.ADMIN", "type": "nominal", "title": "Country"},
+      {
+        "field": "avg_addicted_score",
+        "type": "quantitative",
+        "title": "Average Addicted Score",
+        "format": ".2f"
+      }
+    ]
+  }
 }
