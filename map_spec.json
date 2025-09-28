@@ -1,0 +1,57 @@
+```json
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 500,
+  "data": {
+    "url": "Students_Social_Media_Addiction.csv"
+  },
+  "transform": [
+    {
+      "aggregate": [
+        {"op": "mean", "field": "Addicted_Score", "as": "Mean_Addicted_Score"},
+        {"op": "count", "field": "Student_ID", "as": "Student_Count"}
+      ],
+      "groupby": ["Country"]
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/vega/vega-datasets/master/data/world-110m.json",
+        "format": {"type": "topojson", "feature": "countries"}
+      },
+      "projection": {"type": "equirectangular"},
+      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
+    },
+    {
+      "data": {
+        "url": "Students_Social_Media_Addiction.csv"
+      },
+      "transform": [
+        {
+          "aggregate": [
+            {"op": "mean", "field": "Addicted_Score", "as": "Mean_Addicted_Score"},
+            {"op": "count", "field": "Student_ID", "as": "Student_Count"}
+          ],
+          "groupby": ["Country"]
+        }
+      ],
+      "mark": "geoshape",
+      "encoding": {
+        "color": {
+          "field": "Mean_Addicted_Score",
+          "type": "quantitative",
+          "scale": {"scheme": "reds"},
+          "title": "Avg Addiction Score"
+        },
+        "tooltip": [
+          {"field": "Country", "type": "nominal"},
+          {"field": "Mean_Addicted_Score", "type": "quantitative"},
+          {"field": "Student_Count", "type": "quantitative"}
+        ]
+      }
+    }
+  ]
+}
+```
