@@ -13,7 +13,7 @@
       "lookup": "properties.ADMIN",
       "from": {
         "data": {
-          "url": "https://gist.githubusercontent.com/amolikay/a684a8a8a416361a2751a0b3c0c551f0/raw/26c60942668037f63b174fd9a0733847556d6bf9/gistfile1.txt"
+          "url": "https://gist.githubusercontent.com/amolikay/a684a8a8a416361a2751a0b3c0c551f0/raw/260e2a8eacca5847f7871fe93c89c6c55362d7ce/addiction_data.csv"
         },
         "key": "Country",
         "fields": ["Addicted_Score"]
