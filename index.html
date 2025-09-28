@@ -2,18 +2,16 @@
 <html>
 <head>
   <title>FIT3179 - Social Media Addiction Map</title>
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+
+  <script src="vega_vis.js"></script>
 </head>
 <body>
   <h1>Social Media Addiction Score by Country</h1>
+  
   <div id="map_vis"></div>
 
-  <script type="text/javascript">
-    vegaEmbed("#map_vis", "map.vg.json").then(function(result) {
-      // Map loaded successfully
-    }).catch(console.error);
-  </script>
 </body>
 </html>
