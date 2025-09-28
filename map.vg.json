@@ -1,0 +1,54 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Average Social Media Addiction Score by Country",
+  "width": 800,
+  "height": 500,
+  "projection": {
+    "type": "equalEarth"
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/datasets/geo-countries/main/data/countries.geojson",
+        "format": {"type": "json", "property": "features"}
+      },
+      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
+    },
+    {
+      "data": {
+        "url": "https://gist.githubusercontent.com/YourUsername/.../students_addiction_data.csv"
+      },
+      "transform": [
+        {
+          "lookup": "Country",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/datasets/geo-countries/main/data/countries.geojson",
+              "format": {"type": "json", "property": "features"}
+            },
+            "key": "properties.ADMIN"
+          },
+          "as": "geo"
+        },
+        {
+          "aggregate": [{"op": "mean", "field": "Addicted_Score", "as": "avg_addicted_score"}],
+          "groupby": ["Country"]
+        }
+      ],
+      "mark": "geoshape",
+      "encoding": {
+        "shape": {"field": "geo", "type": "geojson"},
+        "color": {
+          "field": "avg_addicted_score",
+          "type": "quantitative",
+          "scale": {"scheme": "viridis"},
+          "title": "Avg. Addicted Score"
+        },
+        "tooltip": [
+          {"field": "Country", "type": "nominal", "title": "Country"},
+          {"field": "avg_addicted_score", "type": "quantitative", "title": "Average Addicted Score", "format": ".2f"}
+        ]
+      }
+    }
+  ]
+}
