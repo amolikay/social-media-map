@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,169 +70,114 @@
         const spec = {
             "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
             "title": {
-                "text": "Global Social Media Usage and Mental Health Impact (2024)",
+                "text": "Global Social Media Usage by Country (2024)",
                 "fontSize": 16,
                 "anchor": "start",
                 "color": "#333"
             },
             "width": 800,
-            "height": 500,
-            "projection": {
-                "type": "equirectangular",
-                "center": [0, 20],
-                "scale": 120
+            "height": 400,
+            "data": {
+                "url": "https://cdn.jsdelivr.net/npm/world-atlas@3/countries-50m.json",
+                "format": {"type": "topojson", "feature": "countries"}
             },
-            "layer": [
+            "projection": {
+                "type": "naturalEarth1"
+            },
+            "transform": [
                 {
-                    "data": {
-                        "url": "https://cdn.jsdelivr.net/npm/world-atlas@3/countries-110m.json",
-                        "format": {"type": "topojson", "feature": "countries"}
-                    },
-                    "mark": {
-                        "type": "geoshape",
-                        "fill": "#f0f0f0",
-                        "stroke": "#ccc",
-                        "strokeWidth": 0.5
-                    }
-                },
-                {
-                    "data": {
-                        "url": "https://cdn.jsdelivr.net/npm/world-atlas@3/countries-110m.json",
-                        "format": {"type": "topojson", "feature": "countries"}
-                    },
-                    "transform": [
-                        {
-                            "lookup": "properties.NAME",
-                            "from": {
-                                "data": {
-                                    "values": [
-                                        {"Country": "Bangladesh", "Avg_Daily_Usage_Hours": 5.0, "Mental_Health_Score": 5.2, "Addicted_Score": 8.0},
-                                        {"Country": "India", "Avg_Daily_Usage_Hours": 5.5, "Mental_Health_Score": 6.3, "Addicted_Score": 7.2},
-                                        {"Country": "United States of America", "Avg_Daily_Usage_Hours": 7.0, "Mental_Health_Score": 4.6, "Addicted_Score": 9.0},
-                                        {"Country": "United Kingdom", "Avg_Daily_Usage_Hours": 5.4, "Mental_Health_Score": 6.1, "Addicted_Score": 7.4},
-                                        {"Country": "Canada", "Avg_Daily_Usage_Hours": 4.8, "Mental_Health_Score": 6.4, "Addicted_Score": 6.8},
-                                        {"Country": "Australia", "Avg_Daily_Usage_Hours": 5.2, "Mental_Health_Score": 6.8, "Addicted_Score": 6.4},
-                                        {"Country": "Germany", "Avg_Daily_Usage_Hours": 3.7, "Mental_Health_Score": 7.8, "Addicted_Score": 4.2},
-                                        {"Country": "Brazil", "Avg_Daily_Usage_Hours": 5.9, "Mental_Health_Score": 6.0, "Addicted_Score": 7.6},
-                                        {"Country": "Japan", "Avg_Daily_Usage_Hours": 3.5, "Mental_Health_Score": 8.0, "Addicted_Score": 3.8},
-                                        {"Country": "South Korea", "Avg_Daily_Usage_Hours": 4.8, "Mental_Health_Score": 6.2, "Addicted_Score": 6.2},
-                                        {"Country": "France", "Avg_Daily_Usage_Hours": 3.9, "Mental_Health_Score": 7.0, "Addicted_Score": 5.0},
-                                        {"Country": "Spain", "Avg_Daily_Usage_Hours": 5.0, "Mental_Health_Score": 6.0, "Addicted_Score": 7.4},
-                                        {"Country": "Italy", "Avg_Daily_Usage_Hours": 5.2, "Mental_Health_Score": 6.4, "Addicted_Score": 7.2},
-                                        {"Country": "Mexico", "Avg_Daily_Usage_Hours": 6.4, "Mental_Health_Score": 5.8, "Addicted_Score": 7.8},
-                                        {"Country": "Russia", "Avg_Daily_Usage_Hours": 4.4, "Mental_Health_Score": 7.0, "Addicted_Score": 5.0},
-                                        {"Country": "China", "Avg_Daily_Usage_Hours": 4.8, "Mental_Health_Score": 6.6, "Addicted_Score": 6.2},
-                                        {"Country": "Sweden", "Avg_Daily_Usage_Hours": 2.0, "Mental_Health_Score": 8.0, "Addicted_Score": 3.0},
-                                        {"Country": "Norway", "Avg_Daily_Usage_Hours": 5.0, "Mental_Health_Score": 5.0, "Addicted_Score": 8.0},
-                                        {"Country": "Denmark", "Avg_Daily_Usage_Hours": 3.9, "Mental_Health_Score": 7.6, "Addicted_Score": 4.6},
-                                        {"Country": "Netherlands", "Avg_Daily_Usage_Hours": 3.5, "Mental_Health_Score": 8.0, "Addicted_Score": 4.0},
-                                        {"Country": "Belgium", "Avg_Daily_Usage_Hours": 5.3, "Mental_Health_Score": 5.0, "Addicted_Score": 8.0},
-                                        {"Country": "Switzerland", "Avg_Daily_Usage_Hours": 3.4, "Mental_Health_Score": 7.8, "Addicted_Score": 4.2},
-                                        {"Country": "Austria", "Avg_Daily_Usage_Hours": 4.9, "Mental_Health_Score": 6.0, "Addicted_Score": 7.0},
-                                        {"Country": "Portugal", "Avg_Daily_Usage_Hours": 5.7, "Mental_Health_Score": 5.0, "Addicted_Score": 8.0},
-                                        {"Country": "Greece", "Avg_Daily_Usage_Hours": 3.2, "Mental_Health_Score": 7.0, "Addicted_Score": 5.0},
-                                        {"Country": "Ireland", "Avg_Daily_Usage_Hours": 4.8, "Mental_Health_Score": 6.8, "Addicted_Score": 6.8},
-                                        {"Country": "New Zealand", "Avg_Daily_Usage_Hours": 4.4, "Mental_Health_Score": 7.0, "Addicted_Score": 5.8},
-                                        {"Country": "Singapore", "Avg_Daily_Usage_Hours": 5.4, "Mental_Health_Score": 6.0, "Addicted_Score": 7.0},
-                                        {"Country": "Malaysia", "Avg_Daily_Usage_Hours": 5.8, "Mental_Health_Score": 6.0, "Addicted_Score": 7.0},
-                                        {"Country": "Thailand", "Avg_Daily_Usage_Hours": 5.9, "Mental_Health_Score": 5.0, "Addicted_Score": 8.0},
-                                        {"Country": "Vietnam", "Avg_Daily_Usage_Hours": 3.6, "Mental_Health_Score": 7.0, "Addicted_Score": 5.0},
-                                        {"Country": "Philippines", "Avg_Daily_Usage_Hours": 4.8, "Mental_Health_Score": 6.0, "Addicted_Score": 7.0},
-                                        {"Country": "Indonesia", "Avg_Daily_Usage_Hours": 5.4, "Mental_Health_Score": 5.0, "Addicted_Score": 8.0},
-                                        {"Country": "Turkey", "Avg_Daily_Usage_Hours": 5.4, "Mental_Health_Score": 5.8, "Addicted_Score": 7.6},
-                                        {"Country": "Israel", "Avg_Daily_Usage_Hours": 3.1, "Mental_Health_Score": 7.0, "Addicted_Score": 5.0},
-                                        {"Country": "United Arab Emirates", "Avg_Daily_Usage_Hours": 6.8, "Mental_Health_Score": 5.0, "Addicted_Score": 8.4},
-                                        {"Country": "Egypt", "Avg_Daily_Usage_Hours": 3.9, "Mental_Health_Score": 7.0, "Addicted_Score": 6.0},
-                                        {"Country": "South Africa", "Avg_Daily_Usage_Hours": 2.3, "Mental_Health_Score": 8.0, "Addicted_Score": 4.0},
-                                        {"Country": "Nigeria", "Avg_Daily_Usage_Hours": 5.8, "Mental_Health_Score": 5.0, "Addicted_Score": 8.0},
-                                        {"Country": "Argentina", "Avg_Daily_Usage_Hours": 5.5, "Mental_Health_Score": 5.0, "Addicted_Score": 8.0},
-                                        {"Country": "Chile", "Avg_Daily_Usage_Hours": 2.7, "Mental_Health_Score": 8.0, "Addicted_Score": 4.0},
-                                        {"Country": "Colombia", "Avg_Daily_Usage_Hours": 4.8, "Mental_Health_Score": 6.0, "Addicted_Score": 7.0},
-                                        {"Country": "Peru", "Avg_Daily_Usage_Hours": 5.5, "Mental_Health_Score": 5.0, "Addicted_Score": 8.0},
-                                        {"Country": "Ecuador", "Avg_Daily_Usage_Hours": 6.3, "Mental_Health_Score": 5.0, "Addicted_Score": 9.0},
-                                        {"Country": "Finland", "Avg_Daily_Usage_Hours": 4.9, "Mental_Health_Score": 6.4, "Addicted_Score": 6.8},
-                                        {"Country": "Poland", "Avg_Daily_Usage_Hours": 4.8, "Mental_Health_Score": 6.6, "Addicted_Score": 7.2}
-                                    ]
-                                },
-                                "key": "Country",
-                                "fields": ["Avg_Daily_Usage_Hours", "Mental_Health_Score", "Addicted_Score"]
-                            }
+                    "lookup": "properties.NAME",
+                    "from": {
+                        "data": {
+                            "values": [
+                                {"name": "United States of America", "usage": 7.0, "mental": 4.6, "addiction": 9.0},
+                                {"name": "United Arab Emirates", "usage": 6.8, "mental": 5.0, "addiction": 8.4},
+                                {"name": "Mexico", "usage": 6.4, "mental": 5.8, "addiction": 7.8},
+                                {"name": "Ecuador", "usage": 6.3, "mental": 5.0, "addiction": 9.0},
+                                {"name": "Brazil", "usage": 5.9, "mental": 6.0, "addiction": 7.6},
+                                {"name": "Thailand", "usage": 5.9, "mental": 5.0, "addiction": 8.0},
+                                {"name": "Malaysia", "usage": 5.8, "mental": 6.0, "addiction": 7.0},
+                                {"name": "Nigeria", "usage": 5.8, "mental": 5.0, "addiction": 8.0},
+                                {"name": "Portugal", "usage": 5.7, "mental": 5.0, "addiction": 8.0},
+                                {"name": "India", "usage": 5.5, "mental": 6.3, "addiction": 7.2},
+                                {"name": "Argentina", "usage": 5.5, "mental": 5.0, "addiction": 8.0},
+                                {"name": "Peru", "usage": 5.5, "mental": 5.0, "addiction": 8.0},
+                                {"name": "United Kingdom", "usage": 5.4, "mental": 6.1, "addiction": 7.4},
+                                {"name": "Singapore", "usage": 5.4, "mental": 6.0, "addiction": 7.0},
+                                {"name": "Indonesia", "usage": 5.4, "mental": 5.0, "addiction": 8.0},
+                                {"name": "Turkey", "usage": 5.4, "mental": 5.8, "addiction": 7.6},
+                                {"name": "Belgium", "usage": 5.3, "mental": 5.0, "addiction": 8.0},
+                                {"name": "Australia", "usage": 5.2, "mental": 6.8, "addiction": 6.4},
+                                {"name": "Italy", "usage": 5.2, "mental": 6.4, "addiction": 7.2},
+                                {"name": "Bangladesh", "usage": 5.0, "mental": 5.2, "addiction": 8.0},
+                                {"name": "Spain", "usage": 5.0, "mental": 6.0, "addiction": 7.4},
+                                {"name": "Norway", "usage": 5.0, "mental": 5.0, "addiction": 8.0},
+                                {"name": "Austria", "usage": 4.9, "mental": 6.0, "addiction": 7.0},
+                                {"name": "Finland", "usage": 4.9, "mental": 6.4, "addiction": 6.8},
+                                {"name": "Canada", "usage": 4.8, "mental": 6.4, "addiction": 6.8},
+                                {"name": "South Korea", "usage": 4.8, "mental": 6.2, "addiction": 6.2},
+                                {"name": "China", "usage": 4.8, "mental": 6.6, "addiction": 6.2},
+                                {"name": "Ireland", "usage": 4.8, "mental": 6.8, "addiction": 6.8},
+                                {"name": "Philippines", "usage": 4.8, "mental": 6.0, "addiction": 7.0},
+                                {"name": "Colombia", "usage": 4.8, "mental": 6.0, "addiction": 7.0},
+                                {"name": "Poland", "usage": 4.8, "mental": 6.6, "addiction": 7.2},
+                                {"name": "Russia", "usage": 4.4, "mental": 7.0, "addiction": 5.0},
+                                {"name": "New Zealand", "usage": 4.4, "mental": 7.0, "addiction": 5.8},
+                                {"name": "France", "usage": 3.9, "mental": 7.0, "addiction": 5.0},
+                                {"name": "Denmark", "usage": 3.9, "mental": 7.6, "addiction": 4.6},
+                                {"name": "Egypt", "usage": 3.9, "mental": 7.0, "addiction": 6.0},
+                                {"name": "Germany", "usage": 3.7, "mental": 7.8, "addiction": 4.2},
+                                {"name": "Vietnam", "usage": 3.6, "mental": 7.0, "addiction": 5.0},
+                                {"name": "Japan", "usage": 3.5, "mental": 8.0, "addiction": 3.8},
+                                {"name": "Netherlands", "usage": 3.5, "mental": 8.0, "addiction": 4.0},
+                                {"name": "Switzerland", "usage": 3.4, "mental": 7.8, "addiction": 4.2},
+                                {"name": "Greece", "usage": 3.2, "mental": 7.0, "addiction": 5.0},
+                                {"name": "Israel", "usage": 3.1, "mental": 7.0, "addiction": 5.0},
+                                {"name": "Chile", "usage": 2.7, "mental": 8.0, "addiction": 4.0},
+                                {"name": "South Africa", "usage": 2.3, "mental": 8.0, "addiction": 4.0},
+                                {"name": "Sweden", "usage": 2.0, "mental": 8.0, "addiction": 3.0}
+                            ]
                         },
-                        {
-                            "filter": "datum.Avg_Daily_Usage_Hours != null"
-                        }
-                    ],
-                    "mark": {
-                        "type": "geoshape",
-                        "stroke": "#fff",
-                        "strokeWidth": 0.8
-                    },
-                    "encoding": {
-                        "color": {
-                            "field": "Avg_Daily_Usage_Hours",
-                            "type": "quantitative",
-                            "scale": {
-                                "scheme": "oranges",
-                                "domain": [0, 8]
-                            },
-                            "legend": {
-                                "title": "Daily Usage (Hours)",
-                                "orient": "bottom-right",
-                                "gradientLength": 200
-                            }
-                        },
-                        "tooltip": [
-                            {"field": "properties.NAME", "type": "nominal", "title": "Country"},
-                            {"field": "Avg_Daily_Usage_Hours", "type": "quantitative", "title": "Daily Usage (Hours)", "format": ".1f"},
-                            {"field": "Mental_Health_Score", "type": "quantitative", "title": "Mental Health Score", "format": ".1f"},
-                            {"field": "Addicted_Score", "type": "quantitative", "title": "Addiction Score", "format": ".1f"}
-                        ]
-                    }
-                },
-                {
-                    "data": {
-                        "url": "https://cdn.jsdelivr.net/npm/world-atlas@3/countries-110m.json",
-                        "format": {"type": "topojson", "feature": "countries"}
-                    },
-                    "transform": [
-                        {
-                            "lookup": "properties.NAME",
-                            "from": {
-                                "data": {
-                                    "values": [
-                                        {"Country": "United States of America", "Avg_Daily_Usage_Hours": 7.0},
-                                        {"Country": "United Arab Emirates", "Avg_Daily_Usage_Hours": 6.8},
-                                        {"Country": "Mexico", "Avg_Daily_Usage_Hours": 6.4},
-                                        {"Country": "Ecuador", "Avg_Daily_Usage_Hours": 6.3},
-                                        {"Country": "Brazil", "Avg_Daily_Usage_Hours": 5.9},
-                                        {"Country": "Thailand", "Avg_Daily_Usage_Hours": 5.9}
-                                    ]
-                                },
-                                "key": "Country",
-                                "fields": ["Avg_Daily_Usage_Hours"]
-                            }
-                        },
-                        {
-                            "filter": "datum.Avg_Daily_Usage_Hours != null && datum.Avg_Daily_Usage_Hours >= 6"
-                        }
-                    ],
-                    "mark": {
-                        "type": "geoshape",
-                        "fill": "transparent",
-                        "stroke": "#d62728",
-                        "strokeWidth": 2,
-                        "strokeDash": [4, 2]
+                        "key": "name",
+                        "fields": ["usage", "mental", "addiction"]
                     }
                 }
             ],
-            "resolve": {
-                "scale": {
-                    "color": "independent"
-                }
+            "mark": {
+                "type": "geoshape",
+                "stroke": "white",
+                "strokeWidth": 0.5
+            },
+            "encoding": {
+                "color": {
+                    "field": "usage",
+                    "type": "quantitative",
+                    "scale": {
+                        "scheme": "oranges",
+                        "domain": [2, 7]
+                    },
+                    "legend": {
+                        "title": "Daily Usage (Hours)",
+                        "orient": "bottom-left"
+                    }
+                },
+                "tooltip": [
+                    {"field": "properties.NAME", "type": "nominal", "title": "Country"},
+                    {"field": "usage", "type": "quantitative", "title": "Daily Usage (Hours)", "format": ".1f"},
+                    {"field": "mental", "type": "quantitative", "title": "Mental Health Score", "format": ".1f"},
+                    {"field": "addiction", "type": "quantitative", "title": "Addiction Score", "format": ".1f"}
+                ]
             }
         };
 
-        vegaEmbed('#vis', spec).catch(console.error);
+        vegaEmbed('#vis', spec, {
+            "actions": false
+        }).then(function(result) {
+            console.log("Map loaded successfully!");
+        }).catch(function(error) {
+            console.error("Error loading map:", error);
+            document.getElementById('vis').innerHTML = '<p style="color: red; text-align: center;">Error loading visualization. Please check the console for details.</p>';
+        });
     </script>
 </body>
 </html>
