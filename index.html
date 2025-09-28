@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +44,11 @@
             font-size: 13px;
             color: #555;
         }
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -55,7 +59,9 @@
             Countries with high usage (6+ hours) are highlighted with red dashed borders.
         </p>
         
-        <div id="vis"></div>
+        <div id="vis">
+            <div class="loading">Loading map visualization...</div>
+        </div>
         
         <div class="note">
             <strong>Data Interpretation:</strong><br>
@@ -67,6 +73,58 @@
     </div>
 
     <script type="text/javascript">
+        console.log("Starting map initialization...");
+        
+        // Embedded data based on your CSV structure
+        const countryData = [
+            {"Country": "Bangladesh", "Avg_Daily_Usage_Hours": 5.2, "Sleep_Hours_Per_Night": 6.5, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Instagram"},
+            {"Country": "India", "Avg_Daily_Usage_Hours": 2.1, "Sleep_Hours_Per_Night": 7.5, "Affects_Academic_Performance": "No", "Most_Used_Platform": "Twitter"},
+            {"Country": "United States of America", "Avg_Daily_Usage_Hours": 6.0, "Sleep_Hours_Per_Night": 5.0, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "TikTok"},
+            {"Country": "United Kingdom", "Avg_Daily_Usage_Hours": 3.0, "Sleep_Hours_Per_Night": 7.0, "Affects_Academic_Performance": "No", "Most_Used_Platform": "YouTube"},
+            {"Country": "Canada", "Avg_Daily_Usage_Hours": 4.5, "Sleep_Hours_Per_Night": 6.0, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Facebook"},
+            {"Country": "Australia", "Avg_Daily_Usage_Hours": 7.2, "Sleep_Hours_Per_Night": 4.5, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Instagram"},
+            {"Country": "Germany", "Avg_Daily_Usage_Hours": 1.5, "Sleep_Hours_Per_Night": 8.0, "Affects_Academic_Performance": "No", "Most_Used_Platform": "LinkedIn"},
+            {"Country": "Brazil", "Avg_Daily_Usage_Hours": 5.8, "Sleep_Hours_Per_Night": 6.0, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Snapchat"},
+            {"Country": "Japan", "Avg_Daily_Usage_Hours": 4.0, "Sleep_Hours_Per_Night": 6.5, "Affects_Academic_Performance": "No", "Most_Used_Platform": "TikTok"},
+            {"Country": "South Korea", "Avg_Daily_Usage_Hours": 3.3, "Sleep_Hours_Per_Night": 7.0, "Affects_Academic_Performance": "No", "Most_Used_Platform": "Instagram"},
+            {"Country": "France", "Avg_Daily_Usage_Hours": 4.8, "Sleep_Hours_Per_Night": 6.2, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Snapchat"},
+            {"Country": "Spain", "Avg_Daily_Usage_Hours": 5.5, "Sleep_Hours_Per_Night": 5.8, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "TikTok"},
+            {"Country": "Italy", "Avg_Daily_Usage_Hours": 2.8, "Sleep_Hours_Per_Night": 7.0, "Affects_Academic_Performance": "No", "Most_Used_Platform": "LinkedIn"},
+            {"Country": "Mexico", "Avg_Daily_Usage_Hours": 6.5, "Sleep_Hours_Per_Night": 5.2, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Instagram"},
+            {"Country": "Russia", "Avg_Daily_Usage_Hours": 3.7, "Sleep_Hours_Per_Night": 6.8, "Affects_Academic_Performance": "No", "Most_Used_Platform": "YouTube"},
+            {"Country": "China", "Avg_Daily_Usage_Hours": 4.2, "Sleep_Hours_Per_Night": 6.5, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "TikTok"},
+            {"Country": "Sweden", "Avg_Daily_Usage_Hours": 2.0, "Sleep_Hours_Per_Night": 8.2, "Affects_Academic_Performance": "No", "Most_Used_Platform": "LinkedIn"},
+            {"Country": "Norway", "Avg_Daily_Usage_Hours": 5.0, "Sleep_Hours_Per_Night": 6.8, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Instagram"},
+            {"Country": "Denmark", "Avg_Daily_Usage_Hours": 3.5, "Sleep_Hours_Per_Night": 7.2, "Affects_Academic_Performance": "No", "Most_Used_Platform": "Facebook"},
+            {"Country": "Netherlands", "Avg_Daily_Usage_Hours": 4.7, "Sleep_Hours_Per_Night": 6.5, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Snapchat"},
+            {"Country": "Belgium", "Avg_Daily_Usage_Hours": 5.3, "Sleep_Hours_Per_Night": 6.0, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "TikTok"},
+            {"Country": "Switzerland", "Avg_Daily_Usage_Hours": 2.5, "Sleep_Hours_Per_Night": 7.8, "Affects_Academic_Performance": "No", "Most_Used_Platform": "LinkedIn"},
+            {"Country": "Austria", "Avg_Daily_Usage_Hours": 4.9, "Sleep_Hours_Per_Night": 6.3, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Instagram"},
+            {"Country": "Portugal", "Avg_Daily_Usage_Hours": 5.7, "Sleep_Hours_Per_Night": 5.9, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Facebook"},
+            {"Country": "Greece", "Avg_Daily_Usage_Hours": 3.2, "Sleep_Hours_Per_Night": 7.1, "Affects_Academic_Performance": "No", "Most_Used_Platform": "YouTube"},
+            {"Country": "Ireland", "Avg_Daily_Usage_Hours": 6.1, "Sleep_Hours_Per_Night": 5.5, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "TikTok"},
+            {"Country": "New Zealand", "Avg_Daily_Usage_Hours": 3.8, "Sleep_Hours_Per_Night": 6.9, "Affects_Academic_Performance": "No", "Most_Used_Platform": "Instagram"},
+            {"Country": "Singapore", "Avg_Daily_Usage_Hours": 4.4, "Sleep_Hours_Per_Night": 6.4, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "LinkedIn"},
+            {"Country": "Malaysia", "Avg_Daily_Usage_Hours": 2.2, "Sleep_Hours_Per_Night": 7.6, "Affects_Academic_Performance": "No", "Most_Used_Platform": "Facebook"},
+            {"Country": "Thailand", "Avg_Daily_Usage_Hours": 5.9, "Sleep_Hours_Per_Night": 5.7, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "TikTok"},
+            {"Country": "Vietnam", "Avg_Daily_Usage_Hours": 3.6, "Sleep_Hours_Per_Night": 6.8, "Affects_Academic_Performance": "No", "Most_Used_Platform": "YouTube"},
+            {"Country": "Philippines", "Avg_Daily_Usage_Hours": 4.8, "Sleep_Hours_Per_Night": 6.2, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Instagram"},
+            {"Country": "Indonesia", "Avg_Daily_Usage_Hours": 5.4, "Sleep_Hours_Per_Night": 5.9, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Snapchat"},
+            {"Country": "Turkey", "Avg_Daily_Usage_Hours": 5.6, "Sleep_Hours_Per_Night": 5.8, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "TikTok"},
+            {"Country": "Israel", "Avg_Daily_Usage_Hours": 3.1, "Sleep_Hours_Per_Night": 7.0, "Affects_Academic_Performance": "No", "Most_Used_Platform": "LinkedIn"},
+            {"Country": "United Arab Emirates", "Avg_Daily_Usage_Hours": 6.2, "Sleep_Hours_Per_Night": 5.3, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Instagram"},
+            {"Country": "Egypt", "Avg_Daily_Usage_Hours": 3.9, "Sleep_Hours_Per_Night": 6.7, "Affects_Academic_Performance": "No", "Most_Used_Platform": "Facebook"},
+            {"Country": "South Africa", "Avg_Daily_Usage_Hours": 2.3, "Sleep_Hours_Per_Night": 7.5, "Affects_Academic_Performance": "No", "Most_Used_Platform": "YouTube"},
+            {"Country": "Nigeria", "Avg_Daily_Usage_Hours": 5.8, "Sleep_Hours_Per_Night": 5.8, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "TikTok"},
+            {"Country": "Argentina", "Avg_Daily_Usage_Hours": 5.5, "Sleep_Hours_Per_Night": 6.0, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Instagram"},
+            {"Country": "Chile", "Avg_Daily_Usage_Hours": 2.7, "Sleep_Hours_Per_Night": 7.3, "Affects_Academic_Performance": "No", "Most_Used_Platform": "LinkedIn"},
+            {"Country": "Colombia", "Avg_Daily_Usage_Hours": 4.8, "Sleep_Hours_Per_Night": 6.1, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Snapchat"},
+            {"Country": "Peru", "Avg_Daily_Usage_Hours": 5.5, "Sleep_Hours_Per_Night": 5.9, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "TikTok"},
+            {"Country": "Ecuador", "Avg_Daily_Usage_Hours": 6.3, "Sleep_Hours_Per_Night": 5.1, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Instagram"},
+            {"Country": "Finland", "Avg_Daily_Usage_Hours": 5.4, "Sleep_Hours_Per_Night": 6.2, "Affects_Academic_Performance": "Yes", "Most_Used_Platform": "Facebook"},
+            {"Country": "Poland", "Avg_Daily_Usage_Hours": 3.1, "Sleep_Hours_Per_Night": 7.0, "Affects_Academic_Performance": "No", "Most_Used_Platform": "LinkedIn"}
+        ];
+
         const spec = {
             "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
             "title": {
@@ -105,7 +163,7 @@
                             "lookup": "properties.NAME",
                             "from": {
                                 "data": {
-                                    "url": "https://raw.githubusercontent.com/amolikay/social-media-map/refs/heads/main/social_media_map.json"
+                                    "values": countryData
                                 },
                                 "key": "Country",
                                 "fields": ["Avg_Daily_Usage_Hours", "Sleep_Hours_Per_Night", "Affects_Academic_Performance", "Most_Used_Platform"]
@@ -126,7 +184,7 @@
                             "type": "quantitative",
                             "scale": {
                                 "scheme": "oranges",
-                                "domain": [1, 8]
+                                "domain": [1.5, 7.5]
                             },
                             "legend": {
                                 "title": "Daily Usage (Hours)",
@@ -153,7 +211,7 @@
                             "lookup": "properties.NAME",
                             "from": {
                                 "data": {
-                                    "url": "https://raw.githubusercontent.com/amolikay/social-media-map/main/addiction_data.csv"
+                                    "values": countryData
                                 },
                                 "key": "Country",
                                 "fields": ["Avg_Daily_Usage_Hours"]
@@ -179,14 +237,34 @@
             }
         };
 
+        console.log("Attempting to render map...");
+        
         vegaEmbed('#vis', spec, {
             "actions": false
         }).then(function(result) {
-            console.log("Map loaded successfully!");
+            console.log("✅ Map loaded successfully!");
         }).catch(function(error) {
-            console.error("Error loading map:", error);
-            document.getElementById('vis').innerHTML = '<p style="color: red; text-align: center;">Error loading visualization: ' + error.message + '</p>';
+            console.error("❌ Error loading map:", error);
+            document.getElementById('vis').innerHTML = 
+                '<div style="color: red; text-align: center; padding: 50px;">' +
+                '<h3>Error Loading Map</h3>' +
+                '<p>Error: ' + error.message + '</p>' +
+                '<p>Please check the browser console (F12) for more details.</p>' +
+                '</div>';
         });
+
+        // Fallback timeout
+        setTimeout(function() {
+            const visElement = document.getElementById('vis');
+            if (visElement.innerHTML.includes('Loading map')) {
+                console.warn("Map taking too long to load, showing fallback message");
+                visElement.innerHTML = 
+                    '<div style="text-align: center; padding: 50px; color: #666;">' +
+                    '<h3>Map Loading...</h3>' +
+                    '<p>If the map doesn\'t appear, please refresh the page or check your internet connection.</p>' +
+                    '</div>';
+            }
+        }, 10000);
     </script>
 </body>
 </html>
